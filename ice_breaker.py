@@ -1,5 +1,7 @@
 from langchain.prompts.prompt import PromptTemplate
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
+from langchain_community.chat_models import ChatOllama
+from langchain_core.output_parsers import StrOutputParser
 
 information = """
 Elon Reeve Musk (/ˈiːlɒn/; born June 28, 1971) is a businessman and investor known for his key roles in space company SpaceX and automotive company Tesla, Inc. Other involvements include ownership of X Corp., formerly Twitter, and his role in the founding of The Boring Company, xAI, Neuralink and OpenAI. He is one of the wealthiest people in the world; as of July 2024, Forbes estimates his net worth to be US$221 billion.[4]
@@ -22,9 +24,10 @@ if __name__ == '__main__':
 
     summary_prompt_template = PromptTemplate(input_variables=["information"], template=summary_template)
 
-    llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
+    # llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
+    llm = ChatOllama(model="llama3")
 
-    chain = summary_prompt_template | llm
+    chain = summary_prompt_template | llm | StrOutputParser()
     # This creates a processing chain by combining the prompt template and the language model.
     # The | operator indicates that the output of the prompt template will be the input for the language model.
 
